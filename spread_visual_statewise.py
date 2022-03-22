@@ -5,24 +5,24 @@ import pandas as pd
 
 pd.set_option('display.max_rows',None)
 pd.set_option('display.max_columns',None)
-pd.set_option('display.max_colwidth',None)
+pd.options.display.width = None
 
-
+# huge db with daily covid data for all indian states
 data = pd.read_csv('covid_19_ india.csv')
+
+# user input
 state = input("enter state name: ")
 
-
+# part of data set i.e. only the part containing info for user's input
 subset = data[data['Name of State / UT'] == state]
 
-
-
-
 # constants###########################################
+# pixels per
 xfac = 262.1/(77.1055-66.307)
 yfac = 605.2/(28.654-5.902)
 left_lim = 66.307
 bott_lim = 5.902
-ratio1=(1600/data['Size'].max())  #(max mappable/size of largest state)
+ratio1 = (1600/data['Size'].max())  #(max mappable/size of largest state)
 ######################################################
 
 long = list(subset['Longitude'])[1]
@@ -35,8 +35,6 @@ img = mpimg.imread("india base map.gif")
 
 x = (long-left_lim)*xfac
 y = (lat-bott_lim)*yfac
-
-plt.imshow(img[::-1],origin="lower")
 
 
 # returns list of areas over period of time
@@ -52,14 +50,14 @@ def area_of_circle(curr_cases_list):
 
     ###########################################
 
-    curr_area_list=[]
+    curr_area_list = []  # empty list
 
     for x in curr_cases_list:
         curr_area_list.append(x*ratio1*ratio2)
 
     return curr_area_list
 
-area_wrt_time = area_of_circle(cases)
+area_wrt_cases = area_of_circle(cases)
 
 
 def animate(counter):
@@ -75,12 +73,7 @@ def animate(counter):
 animator = FuncAnimation(plt.gcf(),animate,interval=1)
 
 
-
 plt.show()
-
-
-
-
 
 
 
