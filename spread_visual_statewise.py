@@ -61,16 +61,13 @@ area_wrt_cases = area_of_circle(cases)
 
 
 def animate(counter):
-
-    if counter == len(area_wrt_cases):
-        exit()
     plt.cla()
     plt.imshow(img[::-1], origin="lower")
     area = area_wrt_cases[counter]
     plt.title(f'Covid cases ({cases[counter]}) in {state} on {dates[counter]}')
     plt.scatter(x,y,s=area, color='red', alpha=.5)
 
-animator = FuncAnimation(plt.gcf(),animate,interval=1)
+animator = FuncAnimation(plt.gcf(),animate,interval=1,frames=len(area_wrt_cases) ,repeat=False)
 
 
 plt.show()
